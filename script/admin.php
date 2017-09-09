@@ -139,7 +139,7 @@ function put_header(){
 	echo <<<EOL
 	<html>
 	<head>
-	<meta http-equiv="content-type" content="text/html; charset=shift_jis">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="Pragma" content="no-cache">
 	<link rel="stylesheet" type="text/css" href="{$CSSFILE}">
 EOL;

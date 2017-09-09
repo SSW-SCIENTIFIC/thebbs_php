@@ -268,7 +268,7 @@ function check_agent(){
 }
 # ヘッダーの表示
 function put_header(){
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">';
 }
 
 # フッターの表示
@@ -287,7 +287,7 @@ function error($msg){
 		exit();
 	}
 
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">'.
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">'.
 		$msg. '<br><br><a href="javascript:history.go(-1);">戻る</a>';
 	put_footer();
 
@@ -384,7 +384,7 @@ function put_addform(){
 	{$PCLINK}{$PCLINK2}<a href="thebbs.php">{$OMAK}{$BBSTITLE}</a>
 	</div>
 	<div class=ti>新規スレッドの作成</div><br>
-	<form action="thebbs.php?www" method=post accept-charset="Shift_JIS">
+	<form action="thebbs.php?www" method=post accept-charset="utf-8">
 	スレッドのタイトル：<input type=text name=title size=40 maxlength=80>
 	<p class=sma>※タイトルはスレッドの趣旨がわかりやすい内容にした方が、人の目にとまります。悪い例：「教えてください」「聞いてください」</p>
 	自分の名前（固定HN）：<input type=text name=name size=20 maxlength=40 value="{$cname}"><br>
@@ -755,7 +755,7 @@ function thread_write(){
 		setcookie('N'.$thread_num.'_crypt', '', $gmt);
 	}
 	
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
 	printf('location.href="thebbs.php?%s.%d-";</script>書き込みが完了しました・・・<p><a href="thebbs.php?%s.%d-">○</a>', $thread_num, $tmpint, $thread_num, $tmpint);
 
 	exit();
@@ -857,7 +857,7 @@ function thread_add(){
 		setcookie('N'.$thread_num.'_crypt', '', $gmt);
 	}
 
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
 	printf('location.href="thebbs.php?%s";</script>新スレッドができました・・・<p><a href="thebbs.php?%s">○</a>', $thread_num, $thread_num);
 
 	exit();
@@ -1007,7 +1007,7 @@ function put_pwdpage($flg){
 	<div class=ti>パスワード認証</div><br>
 	{$mes}
 	<div class=box>この掲示板をご覧になるためにははパスワードの入力が必要です。<br>ブラウザのクッキーを有効にしてください。<br>尚、ほとんどの携帯電話ではクッキーをサポートしていません。</div><br>
-	<form action="thebbs.php?keep" method=post accept-charset="Shift_JIS">
+	<form action="thebbs.php?keep" method=post accept-charset="utf-8">
 	<p class=sma>※パスワードは管理者にお問い合わせください。</p>
 	入室パスワード：<input type="password" name=thepwd>　<input type=submit value="login">
 	</form>
@@ -1020,7 +1020,7 @@ function keep_pwd(){
 	$gmt = get_GMT();
 	if($_POST['thepwd'] == MEMBERPWD){
 		setcookie('thepwd', MEMBERPWD, $gmt);
-		echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>location.href="thebbs.php";</script>認証されました・・・WELLCOME!<p><a href="thebbs.php">';
+		echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>location.href="thebbs.php";</script>認証されました・・・WELLCOME!<p><a href="thebbs.php">';
 		exit();
 	}
 	error('パスワードが誤っています。入力をお確かめください');
@@ -1029,7 +1029,7 @@ function keep_pwd(){
 # パスワードを消去
 function logout(){
 	setcookie('thepwd', '', 0);
-	print '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body>';
+	print '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body>';
 	put_pwdpage(true);
 }
 
