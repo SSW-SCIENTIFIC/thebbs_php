@@ -139,7 +139,7 @@ function put_header(){
 	echo <<<EOL
 	<html>
 	<head>
-	<meta http-equiv="content-type" content="text/html; charset=shift_jis">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta http-equiv="Pragma" content="no-cache">
 	<link rel="stylesheet" type="text/css" href="{$CSSFILE}">
 EOL;
@@ -306,6 +306,7 @@ function sakujo3(){
 
 	list($name, $crypted, $day, $bun, $host, $ipcrypt) = explode("\t", $rows[$num]);
 	$ipcrypt = rtrim($ipcrypt);
+	$crypted = htmlspecialchars($crypted, ENT_QUOTES);
 
 	$body = <<<EOL
 	<dl class=thread><dt>[{$num}] <b>{$name}</b> {$day} {$crypted} [{$host}] <a id=IP>{$ipcrypt}</a></dt><dd>{$bun}</dd></dl>
@@ -313,10 +314,10 @@ function sakujo3(){
 	<dt><font color=red>この記事を編集・削除します。</font></dt>
 	<hr><dd>
 	<form method=post action=admin.php?cmd=sakujo4>
-	HN：<input type=text name=name value="<small>null</small>"><br>
-	TIME：<input type=text name=day value=""><br>
-	crypted：<input type=text name=crypted value=""><br>
-	メッセージ：<br><textarea name=bun rows=5 cols=70 wrap=off><small>(管理者による削除)</small></textarea><br>
+	HN：<input type=text name=name value="&lt;small&gt;(削除済み)&lt;/small&gt;"><br>
+	TIME：<input type=text name=day value="{$day}"><br>
+	crypted：<input type=text name=crypted value="{$crypted}"><br>
+	メッセージ：<br><textarea name=bun rows=5 cols=70 wrap=off>&lt;small&gt;(管理者による削除)&lt;/small&gt;</textarea><br>
 	<input type=radio name=gflg value='1'>元記事を残す&nbsp;&nbsp;&nbsp;&nbsp;
 	<input type=radio name=gflg value='0' checked>元記事を残さない<br><br>
 	<input type=hidden name=thread value='{$thread}'>
@@ -367,7 +368,7 @@ function sakujo4(){
 	if(!empty($_ENV['gflg'])){
 		$gfile = $_ENV['thread'].'_'.$_ENV['num'];
 		$gfilename = DATDIR.$gfile.'.cgi';
-		$_ENV['bun'] .= ' → <a href="thebbs.php?pg'.$gfile.'" target="Po" OnClick="P(\'g'.$gfile.'\',\'\')">元記事</a>';
+		$_ENV['bun'] .= ' → <small><a href="thebbs.php?pg'.$gfile.'" target="Po" OnClick="P(\'g'.$gfile.'\',\'\')">元記事</a></small>';
 	}
 	$motolog = $tmparray[$_ENV['num']];
 	$tmparray[$_ENV['num']] = $_ENV['name']."\t".$_ENV['crypted']."\t".$_ENV['day']."\t".$_ENV['bun']."\t\t\n";
@@ -611,7 +612,7 @@ function fin3(){
 		if($tmpnum != $_ENV['obj'])
 			fputs($out, $tmpnum.fgets($in));
 		else
-			$endstr = fgets($in);
+			$endstr = preg_replace('/<a href="thebbs\.php\?(\d{10})\.(:?all|e\d{0,4})"/', '<a href="thebbs.php?e$1.all"', str_replace(' <a href="thebbs.php?1142833096.all">(ALL)</a>', '', str_replace(' <span class="end">大団円</span>', '', fgets($in))));
 	}
 
 	$endout = @fopen($ETMPFILE, 'w') or
@@ -870,7 +871,7 @@ function html_decode($tmpstr){
 	$tmpstr = str_replace("\t", '<br>', $tmpstr);
 
 	# PaiNタグを<pre><code>で囲む
-	$tmpstr = preg_replace('/&lt;PaiN&gt;(<br>)?((?:(?!&lt;\/?PaiN&gt;).)*)(<br>)?&lt;\/PaiN&gt;/i', '$1<pre class="PaiN"><code><!-- with respect -->$2</code></pre>$3', $tmpstr);
+	$tmpstr = preg_replace('/&lt;PaiN&gt;(?:<br>)*((?:(?!&lt;\/PaiN&gt;|<br>).)*)(?:<br>)*&lt;\/PaiN&gt;/i', '<pre class="PaiN"><code><!-- with respect -->$1</code></pre>', $tmpstr);
 	$tmpstr = preg_replace('/(?!((?:https?|shttp|ftp):\/\/(?:(?:[-_.!~*\'()a-zA-Z0-9;:&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*@)?(?:(?:[a-zA-Z0-9](?:[-a-zA-Z0-9]*[a-zA-Z0-9])?\.)*[a-zA-Z](?:[-a-zA-Z0-9]*[a-zA-Z0-9])?\.?|[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)(?::[0-9]*)?(?:\/(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*(?:;(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)*(?:\/(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*(?:;(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)*)*)?(?:\?(?:[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)?(?:#(?:[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)?)" target="_blank">)((?:https?|shttp|ftp):\/\/(?:(?:[-_.!~*\'()a-zA-Z0-9;:&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*@)?(?:(?:[a-zA-Z0-9](?:[-a-zA-Z0-9]*[a-zA-Z0-9])?\.)*[a-zA-Z](?:[-a-zA-Z0-9]*[a-zA-Z0-9])?\.?|[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)(?::[0-9]*)?(?:\/(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*(?:;(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)*(?:\/(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*(?:;(?:[-_.!~*\'()a-zA-Z0-9:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)*)*)?(?:\?(?:[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)?(?:#(?:[-_.!~*\'()a-zA-Z0-9;\/?:@&=+$,]|%[0-9A-Fa-f][0-9A-Fa-f])*)?)/i', '<a href="$2" target="_blank">$2</a>', $tmpstr);
 
 	return $tmpstr;

@@ -29,14 +29,31 @@
 body{background-color:white}
 a{COLOR:blue;font-size:96%;padding:2px;}
 :hover {color:blue;text-decoration:underline;}
-i{color:pink}
+i{
+	font-variant		:small-caps;
+	font-style		:normal;
+	margin			:.2em;
+	color			:#ddd;
+}
+.edt{
+	background-color	:#ddd;
+	color			:#fff;
+}
+.gst{
+	background-color	:skyblue;
+	color			:#fff;
+}
 
-
-#IP{color:#eeeeee;text-decoration:none;font-size:smaller}
-#IP:hover {color:#aaaaaa;text-decoration:none;}
+.IP{
+	color			:#f0f8ff;
+	text-decoration		:none;
+	font-size		:smaller
+}
+.IP:hover {
+	color			:#aaaaaa;
+	text-decoration		:none;
+}
 #num{color:#000000;text-decoration:none;}
 #num:hover {color:red;text-decoration:underline;}
 #ti{color:white;text-decoration:none;}
 #ti:hover {color:white;text-decoration:underline;}
-#uc{color:blue}
-

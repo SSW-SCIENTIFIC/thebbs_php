@@ -43,12 +43,26 @@ font-size:11pt;
 a{COLOR:blue;text-decoration:none;font-size:96%;padding:2px;}
 :visited{color:#darkgreen}
 :hover {color:skyblue;text-decoration:underline;}
-i{color:red}
+i{
+	font-variant		:small-caps;
+	font-style		:normal;
+	margin			:.2em;
+	color			:#00f;
+}
 
-#IP{color:#eeeeee;text-decoration:none;font-size:smaller}
-#IP:hover {color:#aaaaaa;text-decoration:none;}
+.edt{
+	background-color	:#ddd;
+	color			:#fff;
+}
+.gst{
+	background-color	:skyblue;
+	color			:#fff;
+}
+
+
+.IP{color:#eeeeee;text-decoration:none;font-size:smaller}
+.IP:hover {color:#aaaaaa;text-decoration:none;}
 #num{color:#000000;text-decoration:none;}
 #num:hover {color:red;text-decoration:underline;}
 #ti{color:#333333;text-decoration:none;}
 #ti:hover {color:white;text-decoration:underline;}
-#uc{color:blue}

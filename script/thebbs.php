@@ -37,7 +37,8 @@
 # 	複数設定できます。
 # 	crypt-keyや表示文字には ' # はつかえません
 # 	
-# 	define('NANASI', '|;´Д`|');
+# 	define('NANASI_BEFORE', '');
+# 	define('NANASI_AFTER', '人目の|;´Д`|');
 # 	↑名無しさんのハンドルネームです
 # 	
 # 	define('PCLINK', '<a href="http://xxx.xxx/" target="_top">HOME</a>');
@@ -105,9 +106,10 @@
 	define('CSSFILE', '../css/sugoiyo260.css');
 	define('ENDSUBTITLE', '【THE終了スレッド】<br>※最大投稿数をオーバーしたり、その他諸事情にて終了となったスレッドです。');
 
-	$ADMINCRYPT = array('okame#*ADMIN*','inoue#*subADMIN*');
-	$USERCRYPT = array('phage#*研究中です*','mogura#*捻れ！*');
-	define('NANASI', '|;´Д`|');
+	$ADMINCRYPT = array('okame#ADMIN','inoue#subADMIN');
+	$USERCRYPT = array('phage#Ss1','mogura#Ss2');
+	define('NANASI_BEFORE', '');
+	define('NANASI_AFTER', '人目の|;´Д`|');
 
 # スレッド一覧やスレッド内からのリンク先。PC用 - 変更しましょう
 
@@ -133,7 +135,7 @@
 	define('MEMBERSHIPSYSTEM', false);
 	define('MEMBERPWD', 'sugoiyo');
 
-	define('KIRIBANSYSTEM', false);
+	define('KIRIBANSYSTEM', true);
 	$KIRIBAN = array('2#2get! yeah!','3#NAGASHIMA JAPAN');
 
 	define('WANTNAME', false);
@@ -149,7 +151,7 @@
 	define('SCVERSION', 'Customized THEBBS.CGI 2X VERSION 2.6.2');				# リンクのtitle属性として使用
 	define('MOBSCNAME', 'Powered by sugoiyo');									# 携帯用スクリプトネーム
 	define('SCNAME2', 'THEBBS.PHP From CGI');				# このスクリプトの名称
-	define('SCVERSION2', 'Customized THEBBS.PHP VERSION 1.01');				# リンクのtitle属性として使用
+	define('SCVERSION2', 'Customized THEBBS.PHP VERSION 1.00');				# リンクのtitle属性として使用
 	define('MOBSCNAME2', 'Powered by S-sword');									# 携帯用スクリプトネーム
 	define('HOGEHOGE', '');
 
@@ -268,7 +270,7 @@ function check_agent(){
 }
 # ヘッダーの表示
 function put_header(){
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">';
 }
 
 # フッターの表示
@@ -287,7 +289,7 @@ function error($msg){
 		exit();
 	}
 
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">'.
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'">'.
 		$msg. '<br><br><a href="javascript:history.go(-1);">戻る</a>';
 	put_footer();
 
@@ -357,7 +359,7 @@ function end_index($lines){
 	echo '<dl class=index>';
 	if($in = @fopen($efile, 'r')){
 		while($tmpint = fread($in, 10)){
-			echo '<dt><a href="./admin.php?cmd=jokyo2&obj=e'.$tmpint.'" id=num title="スレッド除去">'.$num.'.'.str_replace('<a href="thebbs.php?', '<a href="thebbs.php?e', fgets($in));
+			echo '<dt><a href="./admin.php?cmd=jokyo2&obj=e'.$tmpint.'" id=num title="スレッド除去">'.$num.'.'.fgets($in);
 			if(++$num > $lines)
 				break;
 		}
@@ -384,7 +386,7 @@ function put_addform(){
 	{$PCLINK}{$PCLINK2}<a href="thebbs.php">{$OMAK}{$BBSTITLE}</a>
 	</div>
 	<div class=ti>新規スレッドの作成</div><br>
-	<form action="thebbs.php?www" method=post accept-charset="Shift_JIS">
+	<form action="thebbs.php?www" method=post accept-charset="utf-8">
 	スレッドのタイトル：<input type=text name=title size=40 maxlength=80>
 	<p class=sma>※タイトルはスレッドの趣旨がわかりやすい内容にした方が、人の目にとまります。悪い例：「教えてください」「聞いてください」</p>
 	自分の名前（固定HN）：<input type=text name=name size=20 maxlength=40 value="{$cname}"><br>
@@ -447,7 +449,7 @@ function thread_view(){
 	if($gflg){
 		echo '<title>'.OMAK.'元記事</title><style>body{margin:0;font-size:90%;}</style>';
 		list($num, $name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $title);
-		echo '<br><div class=ti2>（削除済み投稿記事）</div><dl class=thread><dt>['.$num.']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd></dl>';
+		echo '<br><div class=ti2>（削除済み投稿記事）</div><dl class=thread><dt>['.$num.']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd></dl>';
 		exit();
 	}
 	echo '<title>'.OMAK.$title.'</title>';
@@ -468,12 +470,12 @@ function thread_view(){
 	# スレッドの記事を表示
 	if($startline > 1 && !$pflg){
 		list($name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $logrow[1]);
-		echo '<dl class=thread><dt><a href="./admin.php?cmd=sakujo3&obj='.$thread_num.'.1" id=num title="Clickで削除">[1]</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd></dl><hr>';
+		echo '<dl class=thread><dt><a href="./admin.php?cmd=sakujo3&obj='.$thread_num.'.1" id=num title="Clickで削除">[1]</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd></dl><hr>';
 	}
 	echo '<dl class=thread>';
 	for($i = $startline; $i <= $endline; $i++){
 		list($name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $logrow[$i]);
-		echo '<dt><a href="./admin.php?cmd=sakujo3&obj='.$thread_num.'.'.intval($i).'" id=num title="Clickで削除">['.intval($i).']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd>';
+		echo '<dt><a href="./admin.php?cmd=sakujo3&obj='.$thread_num.'.'.intval($i).'" id=num title="Clickで削除">['.intval($i).']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd>';
 	}
 	echo '</dl>';
 
@@ -531,7 +533,7 @@ function end_view(){
 	if($gflg){
 		echo '<title>'.OMAK.'元記事</title><style>body{margin:0;font-size:90%;}</style><body>';
 		list($num, $name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $title);
-		echo '<br><div class=ti2>（削除済み投稿記事）</div><dl class=thread><dt>['.$num.']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd></dl>';
+		echo '<br><div class=ti2>（削除済み投稿記事）</div><dl class=thread><dt>['.$num.']</a><b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd></dl>';
 		exit();
 	}
 	echo '<title>'.OMAK.$title.'</title>';
@@ -552,12 +554,12 @@ function end_view(){
 	# スレッドの記事を表示
 	if($startline > 1 && !$pflg){
 		list($name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $logrow[1]);
-		echo '<dl class=thread><dt>[1]<b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd></dl><hr>';
+		echo '<dl class=thread><dt>[1]<b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd></dl><hr>';
 	}
 	echo '<dl class=thread>';
 	for($i = $startline; $i <= $endline; $i++){
 		list($name, $crypted, $day, $bun, $dummy, $ipcrypt) = explode("\t", $logrow[$i]);
-		echo '<dt>['.intval($i).']<b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <a id=IP>'.$ipcrypt.'</a><dd>'.$bun.'</dd>';
+		echo '<dt>['.intval($i).']<b>'.$name.'</b> '.$day.' </dt>'.$crypted.' <i class="IP">'.$ipcrypt.'</i><dd>'.$bun.'</dd>';
 	}
 	echo '</dl>';
 	if($pflg)
@@ -621,7 +623,7 @@ function form_decode(){
 				foreach($ADMINCRYPT as $t_val){
 					$tmpcrypt = explode('#', $t_val);
 					if($value == $tmpcrypt[0]){
-						$_POST['crypted'] = '<i>'.$tmpcrypt[1].'</i>';
+						$_POST['crypted'] = '<i class="edt">'.$tmpcrypt[1].'</i>';
 						$CRYPTKEYMATCHFLG = true;
 						break;
 					}
@@ -630,7 +632,7 @@ function form_decode(){
 					foreach($USERCRYPT as $t_val){
 						$tmpcrypt = explode('#', $t_val);
 						if($value == $tmpcrypt[0]){
-							$_POST['crypted'] = '<i id=uc>'.$tmpcrypt[1].'</i>';
+							$_POST['crypted'] = '<i class="gst">'.$tmpcrypt[1].'</i>';
 							$CRYPTKEYMATCHFLG = true;
 							break;
 						}
@@ -682,7 +684,7 @@ function thread_write(){
 		error('投稿数が規定の'.MAXLINES.'になりました。これ以上は投稿できません。<br>ご利用ありがとうございました。<br><br>ごめんよララァ。僕には帰れるところがあるんだ。ララァにはいつでも会えるから。');
 
 	if(preg_match('/^[\s|　]*$/', $_POST['name'])){
-		$_POST['name'] = NANASI.$nextnum;
+		$_POST['name'] = NANASI_BEFORE.$nextnum.NANASI_AFTER;
 		$nameflg = false;
 	}else
 		$nameflg = true;
@@ -713,7 +715,10 @@ function thread_write(){
 	if($i == 10)
 		error('なんだかスレッドに書き込めないんですよ2 ･ﾟ･(ﾉД`)･ﾟ･');
 
-	$nowstr = '<a href="thebbs.php?'.$thread_num.'">'.$title.'</a></dt><dd>[1]<b>'.$onename.'</b> '.$oneday.' → ['.$nextnum.']<b>'.$_POST['name'].sprintf("</b> %s</dd>\n", $nowday);
+	if($nextnum > 40){
+		if($nextnum == MAXLINES) $nowstr='<a href="thebbs.php?'.$thread_num.'.all">'.$title.'</a> <span class="end">大団円</span></dt><dd>[1]<b>'.$onename.'</b> '.$oneday.' → ['.intval($nextnum).']<b>'.$_POST['name'].sprintf("</b> %s</dd>\n", $nowday);
+		else $nowstr = '<a href="thebbs.php?'.$thread_num.'.e40">'.$title.'</a> <a href="thebbs.php?'.$thread_num.'.all">(ALL)</a></dt><dd>[1]<b>'.$onename.'</b> '.$oneday.' → ['.intval($nextnum).']<b>'.$_POST['name'].sprintf("</b> %s</dd>\n", $nowday);
+	}else $nowstr = '<a href="thebbs.php?'.$thread_num.'.e40">'.$title.'</a></dt><dd>[1]<b>'.$onename.'</b> '.$oneday.' → ['.intval($nextnum).']<b>'.$_POST['name'].sprintf("</b> %s</dd>\n", $nowday);
 	if($ageflg = !empty($_POST['age']))
 		fputs($out, sprintf('%010d', $thread_num).$nowstr);
 
@@ -755,7 +760,7 @@ function thread_write(){
 		setcookie('N'.$thread_num.'_crypt', '', $gmt);
 	}
 	
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
 	printf('location.href="thebbs.php?%s.%d-";</script>書き込みが完了しました・・・<p><a href="thebbs.php?%s.%d-">○</a>', $thread_num, $tmpint, $thread_num, $tmpint);
 
 	exit();
@@ -777,7 +782,7 @@ function thread_add(){
 		error('にじゅうかきこみかも知れません！');
 
 	if(preg_match('/^[\s|　]*$/', $_POST['name'])){
-		$_POST['name'] = NANASI.'1';
+		$_POST['name'] = NANASI_BEFORE.'1'.NANASI_AFTER;
 		$nameflg = false;
 	}else
 		$nameflg = true;
@@ -857,7 +862,7 @@ function thread_add(){
 		setcookie('N'.$thread_num.'_crypt', '', $gmt);
 	}
 
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>';
 	printf('location.href="thebbs.php?%s";</script>新スレッドができました・・・<p><a href="thebbs.php?%s">○</a>', $thread_num, $thread_num);
 
 	exit();
@@ -1007,7 +1012,7 @@ function put_pwdpage($flg){
 	<div class=ti>パスワード認証</div><br>
 	{$mes}
 	<div class=box>この掲示板をご覧になるためにははパスワードの入力が必要です。<br>ブラウザのクッキーを有効にしてください。<br>尚、ほとんどの携帯電話ではクッキーをサポートしていません。</div><br>
-	<form action="thebbs.php?keep" method=post accept-charset="Shift_JIS">
+	<form action="thebbs.php?keep" method=post accept-charset="utf-8">
 	<p class=sma>※パスワードは管理者にお問い合わせください。</p>
 	入室パスワード：<input type="password" name=thepwd>　<input type=submit value="login">
 	</form>
@@ -1020,7 +1025,7 @@ function keep_pwd(){
 	$gmt = get_GMT();
 	if($_POST['thepwd'] == MEMBERPWD){
 		setcookie('thepwd', MEMBERPWD, $gmt);
-		echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>location.href="thebbs.php";</script>認証されました・・・WELLCOME!<p><a href="thebbs.php">';
+		echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body><script>location.href="thebbs.php";</script>認証されました・・・WELLCOME!<p><a href="thebbs.php">';
 		exit();
 	}
 	error('パスワードが誤っています。入力をお確かめください');
@@ -1029,7 +1034,7 @@ function keep_pwd(){
 # パスワードを消去
 function logout(){
 	setcookie('thepwd', '', 0);
-	print '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body>';
+	print '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><link rel="stylesheet" type="text/css" href="'.CSSFILE.'"><body>';
 	put_pwdpage(true);
 }
 

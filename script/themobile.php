@@ -62,7 +62,7 @@ function m_put_index($lines){
 }
 
 function m_put_header(){
-	echo '<meta http-equiv="content-type" content="text/html; charset=shift_jis"><meta http-equiv="pragma" content="no-cache"><html>';
+	echo '<meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="pragma" content="no-cache"><html>';
 }
 
 function m_put_footer(){
