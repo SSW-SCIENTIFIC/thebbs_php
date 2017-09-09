@@ -1,0 +1,223 @@
+<html>
+<head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=SHIFT_JIS">
+<title>THEBBS風スクリプト解説</title>
+<link rel="stylesheet" type="text/css" href="sugoiyo.css">
+</head>
+<body>
+<table border=0 width=450 class=pt1><tr><td>
+<br><br>
+<big><b>THEBBS.CGI（改）2X ver.2.6.2</b></big>
+<br>
+<center>
+<a name="hajime"></a>
+<hr><br>【 始めに 】<br>
+</center>
+<br>
+・オリジナルのTHEBBS.CGIは<a href="http://thebbs.jp/" title="管理人はもとからDQN：ﾋﾞﾌ氏談" target=_blank>ザ掲示板（http://thebbs.jp/）</a>のシステム管理者である<a href="http://www.dogu.jp/" target="_blank">有限会社ハニワシステム</a>の篠田氏によって作成されたフリーcgiソフトです。著作権は篠田氏にあります。<br><small>※但し、篠田氏はスクリプトの改変や再配布に関して制限を設けないことを過去に明言しています。</small>
+<br><br>
+・本プログラム<a href="http://thebbscgi.sugoiyo.com/" target=_blank>THEBBS.CGI（改）</a>はTHE掲示板の利用者である<a href="http://sugoiyo.com/" target=_blank>スゴイよ一族（http://sugoiyo.com/）</a>によって改変されたフリーcgiソフトです。本プログラムはオリジナルを大きく改変しており、スゴイよ一族は改変部分の著作権を主張します。
+<br>
+・本プログラムの改変・デザインの変更について制限は有りません。但し、スクリプト名称表示部は著作権表示として残してください。また、<font color=red>デザイン上の都合等の理由からスクリプトの名称表示部を削除されたい方は、設置サイトにてスクリプトがスゴイよ一族のものであることを明確にし、スゴイよ一族のサイトへのリンクを必ず設置してください。</font><br>
+・スゴイよ一族へのリンク方法に関しては、<a href="http://thebbscgi.sugoiyo.com/readme.html" target="_blank">こちら</a>をご参考にしてください。
+<br>
+・本プログラムをスゴイよ一族に通知することなく再配布することはお止めください。
+<br><br>
+・尚、フリーソフトという性格上、ご利用者がプログラムの不具合によって不利益を被ったとしても、スゴイよ一族は何ら保証の義務を持たないものとさせていただきます。
+<br><br>
+2005年 スゴイよ一族 開発部<br><br>
+
+<font color=red>追記</font><br>
+主にperlの勉強を兼ねてTHEBBS.CGIの改造を続けてきましたが、度重なる改造によって充実した機能を付加できたと思っています。<br>
+ファイルロックに関してはflock関数を中心にしています。初心者の方などが設置時に楽なようにと、2Xシリーズに関しては設置ファイルを少なくするようにしています。<br>
+また改行コードに関してはWindows標準のCR+LF（\r\n）としています。<br>
+CGIが実行可能なサーバー、ftpソフト、メモ帳、本スクリプトが在ればお楽しみ頂けます。<br>
+その他、大型掲示板群等の運営をするためのスクリプトとしてご利用することはお勧めいたしません。
+<br><br>
+<center>
+<a name="mokuteki"></a>
+<hr><br>【 配布目的 】<br>
+</center>
+<br>
+・sugoiyo.comの宣伝。<br>
+・thebbs.jp及び、掲示板文化の発展に寄与することを目指す。<br>
+<br><br>
+<a name=kinou></a>
+<center>
+<a name="gokan"></a>
+<hr><br>【 互換性について 】<br>
+</center>
+<br>
+・<font color=blue>オリジナルのTHEBBS.CGI</font>及び<font color=blue>THEBBS.CGI（改）2Xシリーズ</font>は互換性があり、ログファイルをそのまま利用できます。2Xについては、今後は修正のみとして、追加機能等は考えておりません。<br>
+CSS（デザインを決めるスタイルシート）については2.6.0より若干の追加を行いました。同梱された専用のCSSファイルをご利用ください。
+<br><br>
+<center>
+<a name="haihu"></a>
+<hr><br>【 配布ファイル構成 】<br>
+</center>
+<br>
+<table border=0 class=pt1 cellpadding=3 cellspacing=0>
+<tr><td>thebbs.cgi</td><td> - </td><td>掲示板本体のperlスクリプト</td></tr>
+<tr><td>themobile.cgi</td><td> - </td><td>携帯用掲示板のperlスクリプト</td></tr>
+<tr><td>admin.cgi</td><td> - </td><td>管理人モードのperlスクリプト</td></tr>
+<tr><td>sugoiyo260.css</td><td> - </td><td>Ver.2.6.0専用の白を基調にした旧ザ掲示板(http://www1.thebbs.jp/)風のスタイルシート </td></tr>
+<tr><td>verdana_w260.css</td><td> - </td><td>Ver.2.6.0専用の白を基調にしたスタイルシート / verdana（win向け）chicago（mac向け）というフォントを利用</td></tr>
+<tr><td>readmeフォルダ</td><td> - </td><td>本説明書（設置不要）</td></tr>
+</table>
+<br><br>
+
+<center>
+<a name="rireki"></a>
+<hr><br>【 更新履歴 】<br>
+</center>
+<br>
+<table border=0 class=pt1 cellpadding=1 cellspacing=5>
+	<tr>
+		<td class=pt2>2.6.2 </td>
+		<td>
+htmlオプションの表示を修正。<br>
+名前とcrypt-keyに関するクッキー処理をjavascriptから全面的にサーバーサイドに移行。<br>
+>>2のようなリンクに関する処理が不安定な為2.6.0以前の処理方法に戻した。<br>
+その他admin.cgiでのバグをいくつか修正。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.6.1 </td>
+		<td>
+htmlオプションの一部不具合を修正。admin.cgiでのバグを修正。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.6.0 </td>
+		<td>
+複数のオプション設定を追加。admin.cgiの整理等。CSSに追加をしてバージョンをアップ。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.5.2 </td>
+		<td>
+ADMINCRYPT利用時には、IPから生成される文字列が表示されないようにするのでした。忘れてました。ので、追加。<br>
+feedback from 侍刀
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.5.1 </td>
+		<td>
+携帯版の表示を修正したり、変更しました。機能的な部分は250から変わっていませんが、ソースを多少（微小）だけいじりました。それだけです。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.5.0 </td>
+		<td>
+侍刀氏から指摘を頂いていた不具合を調整しました。表示的な問題です。<br>
+2.5.0から、PCと携帯が同じURLでアクセスできるようになりました。これは、thebbs.cgiの中にキャリアの振り分け機能を追加したためです。その結果、PC版と携帯版の初期設定事項はthebbs.cgiの中で行います。あまりテストをしていないので不具合があるかもしれません。<br>
+管理者用のクリプトキーと、ユーザー用のクリプトキーを複数設定できるようになりました。また、ユーザー用の特殊クリプト用にCSSに#ucという項目を追加しました。ユーザー用の特殊クリプトはデフォルトで青になります。<br>
+MAC OS XのブラウザであるSafariでのクッキー処理が正常でなかったので、無理矢理修正しました。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.4.0 </td>
+		<td>
+スレッドの終了ができるようになりました。最大投稿数前のスレッドでも強制的に終了し、終了済みスレッドとすることが可能です。<br>
+その他、削除時のコメントや、元記事機能など、管理面での機能を追加しています。詳細は面倒なので、体で覚えてください。なるべく若いうちに。<br>
+是非。<br>
+そういえば、CSSも若干追加しましたので、忘れずに更新してください。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.3.4 </td>
+		<td>
+投稿者自身が記事の削除を行えるようにしました。<br>
+これは、admin.cgiの設定を変えることにより、削除を管理者のみに限定することも出来ます。お好みにより設定されてください。<br>
+関連して、個人を判別するための「クリプトノモト」が「crypt-key」に名称を変更しました。crypt-keyを入力することで、投稿者は自分の記事を削除できるようになります。<br>
+また、IPから生成される文字列がリンクとなって、記事の削除画面へ移動するようになっています。<br>
+その他、admin.cgiを中心に管理者が記事を削除しやすいように変更されたと思います。<br>
+また、<font color=red>CSSは専用となりました。</font>今までお使いのthe.cssでは若干デザインが崩れる可能性があります。ご注意ください。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.3.3 </td>
+		<td>
+投稿者のIPから生成しているIDの暗号化に手を入れました。
+旧トリップ方式からクリプトノモトに変更しました。
+クリプトノモトの暗号化の方法は以前のアルゴリズムを継承しています。
+名前欄とクリプトノモト欄には#が使えないようになりました。
+ネットスケープを利用するとクッキーの処理がおかしくなるという症状を強引に修正しました。
+IEおよび、ネットスケープでは正常に動作するはずです。
+その他のブラウザに関しては今後検証していきます。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.3.2 </td>
+		<td>
+JavaScriptにて行っていたクッキーの保存をcgi側で行わせるようにした。一部にて不評だったので、インデックスを上げるチェックボックスをデフォルトでcheckedに戻した。旧式トリップ周りを少し改良。携帯版の一部不具合を修正。リンクにてジャンプする際に、http://nun.nu/を利用するように変更。投稿者情報を、admin.cgiにて確認できるようにした。投稿者のIPを元に、文字列を表示させるようにした。
+		</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=3 height=1></td>
+	</tr>
+	<tr>
+		<td class=pt2>2.2 </td>
+		<td>tファイルの記述方法を元に戻し、携帯版では表示の際にリンク部分を置き換えるようにした。HTML部分を適当に軽くした。送信される情報のバイト数上限を4000から3500に変更。（携帯版への配慮）</td>
+		<td class=pt2 width=3><img src=img/clear.gif width=1 height=1></td>
+	</tr> 
+	<tr>
+		<td class=pt2>2.1 </td>
+		<td>変数を追加し、携帯用のcgiファイル名を任意に変更できるようにした。</td>
+		<td class=pt2 width=2><img src=img/clear.gif width=1 height=1></td>
+	</tr> 
+	<tr>
+		<td class=pt2>2.0 </td>
+		<td>tファイルへの記述を追加し、データを共有する携帯用のhoge_mob.cgiを追加した。</td>
+		<td class=pt2 width=2><img src=img/clear.gif width=1 height=1></td>
+	</tr> 
+	<tr>
+		<td class=pt2>1.1 </td>
+		<td>携帯でも閲覧できるようにスレッドの表示数を少なくした。</td>
+		<td class=pt2 width=2><img src=img/clear.gif width=1 height=1></td>
+	</tr> 
+	<tr>
+		<td class=pt2>1.0 </td>
+		<td>書き込み後にフレームのターゲットが狂う問題を、適当にごまかした。</td>
+		<td class=pt2 width=2><img src=img/clear.gif width=1 height=1></td>
+	</tr> 
+</table>
+
+<center>
+<a name="kongo"></a>
+<hr><br>【 今後の改造予定 】<br>
+</center>
+<br>
+　今後も改2Xに関して大幅な機能の追加等は考えておりません。バグ等の修正のみ対応していきます。<br>
+　現在携帯版では終了済みスレッド等を閲覧することが出来ません。また、一部の機能も制限されています。携帯版はあくまでオマケですので終了済みスレッド等への対応は考えておりません。<br>
+<br>
+また、<font color=red>更新のお知らせだけを通知するメルマガ</font>を発行していますので、是非ご利用ください。THEBBS.CGIの改造版以外でも、オリジナルのスクリプト配布を目指しています。<br>
+<br>
+今後2Xに関してはCSSの解説やら改造のポイントやらをFAQ風にまとめていければと考えています。それらコンテンツが出来次第、メルマガにてお知らせいたします。<br>
+<a href="http://mag.sugoiyo.com/script/" target="_blank">メルマガ</a><br>
+<br>
+その他、スクリプトに関するご意見は常時受け付けております。<br>
+THEBBS.CGI（改）を実際に利用されている方のご意見や、バグのリポートなどを頂けると嬉しく思います。<br>
+<a href="http://mail.sugoiyo.com/?sub=2&to=1" target="_blank">お問い合わせ</a>
+<br><br>
+<center>
+<a name="support"></a>
+<hr><br>【 サポート 】<br>
+</center>
+<br>
+必ずしもお答えできるわけでは有りませんが、ご質問があれば、こちらへどうぞ。<br>
+<a href="http://thebbscgi.sugoiyo.com/" target=_blank>THEBBS.CGI（改）</a><br>
+<br><hr>
+<br>
+<center>
+<font color=blue>&copy; 2005 sugoiyo, All Rights Reserved</font>
+<br>
+</td></tr></table>
+<font color=white>フ氏=研究者</br>

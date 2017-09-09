@@ -1,0 +1,42 @@
+.index b{padding:0,3}
+.index dd{font-size:80%}
+.index dt{margin-top:5;text-indent:1em;font-size:96%}
+
+
+.thread dt b{text-decoration:underline;font-size:110%}
+.thread dt{margin:15px,0,5px,0;font-size:92%}
+.thread dd{word-wrap:break-word;font-size:90%;line-height:120%;}
+.thread input{border:1px solid}
+.thread textarea{border:1px solid;filter:}
+.thread dt em{color:gray;font-size:smaller;}
+.thread small{color:gray}
+
+.PaiN {background-color:#efefef;padding:7px;border:1px dimgray dotted;}
+.PaiN a{color:black;text-decoration:none;}
+.PaiN:hover {color:black;text-decoration:none;}
+
+
+.mi{font-size:smaller;text-align:right}
+.ti{background-color:dimgray;color:white;width:100%;font-size:large;padding:3px}
+.ti2{background-color:dimgray;color:white;width:100%;font-size:14px;padding:3px}
+.box{border:1px solid;margin:10px,30px;padding:5px;font-size:75%}
+.endbox{border:1px red solid;margin:10px,30px;padding:5px;font-size:75%;color:red}
+.cp{position:absolute;right:2px;font-size:9px}
+.cp a{COLOR:#dddddd;font-family: 'verdana,chicago,"‚l‚r ‚oƒSƒVƒbƒN",Osaka';text-decoration:none;}
+.end{color:red}
+.sma{font-size:80%;padding:10px}
+
+body{background-color:white}
+a{COLOR:blue;font-size:96%;padding:2px;}
+:hover {color:blue;text-decoration:underline;}
+i{color:pink}
+
+
+#IP{color:#eeeeee;text-decoration:none;font-size:smaller}
+#IP:hover {color:#aaaaaa;text-decoration:none;}
+#num{color:#000000;text-decoration:none;}
+#num:hover {color:red;text-decoration:underline;}
+#ti{color:white;text-decoration:none;}
+#ti:hover {color:white;text-decoration:underline;}
+#uc{color:blue}
+

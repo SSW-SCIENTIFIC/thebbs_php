@@ -1,0 +1,216 @@
+<html>
+<head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=SHIFT_JIS">
+<title>THEBBS風スクリプト解説</title>
+<link rel="stylesheet" type="text/css" href="sugoiyo.css">
+</head>
+<body>
+<table border=0 width=450 class=pt1><tr><td>
+<br><br>
+<big><b>THEBBS.CGI（改）2X ver.2.6.2 設置方法</b></big>
+<br>
+<center>
+<a name="tejun"></a>
+<hr><br>【 設置手順 】<br>
+</center>
+<br>
+
+1. CGIが利用可能なサーバーを用意またはレンタルします。<br>
+2. スクリプトの設定を行います。<br>
+3. FTPソフト等でサーバー内に設置します。<br>
+4. スクリプトのパーミッションを設定します。<br>
+<br>
+<font color=red>※詳細な手順については現在作成中です</font>
+<br>
+<br>
+<center>
+<a name="settei1"></a>
+<hr><br>【 必須設定事項】<br>
+</center>
+<br>
+・下記の説明を参考にして、それぞれのスクリプト内の設定を変更してください<br>
+Windowsではメモ帳でも変更できますが、MKeditor等のテキストエディターを利用すると良いでしょう。Macユーザーの場合は、miエディターをお勧めします。
+<br>
+<br>
+<b>[thebbs.cgi]の設定変更</b><br>
+<dl>
+<dt>#!/bin/perl</dt>
+<dd>1行目にある「perlへのパス」と呼ばれるものです。#!/usr/local/bin/perl や、#!/usr/bin/perl など、<font color=red>※設置するサーバーによって異なります。</font>設置するサーバーの仕様を確認してください。</dd>
+</dl>
+
+※以下はthebbs.cgiの145行目以降から記述されています。<br>
+
+<dl>
+<dt>$BBSTITLE='爆発コンデンサ';<br>
+$SUBTITLE='旧THEBBS型掲示板';</dt>
+<dd>PC表示用の掲示板のタイトルとサブタイトル。''内を変更してください（以降も同様に''内を変更してください）</dd>
+<br>
+<dt>$MOBBBSTITLE='[携帯用爆発コンデンサ]';<br>
+$MOBSUBTITLE='携帯用旧THEBBS型掲示板';</dt>
+<dd>携帯表示用の掲示板のタイトルとサブタイトル。</dd>
+<br>
+<dt>$DATDIR='dat/';</dt>
+<dd>thebbs.cgiの場所から見た、datディレクトリの位置。通常は変更不要</dd>
+<br>
+<dt>$CSSFILE='../css/sugoiyo260.css';</dt>
+<dd>thebbs.cgiの場所から見た、sugoiyo260.cssの位置。<br>
+※よくわからないという方はhttp://から始まるアドレスを書いてください。通常は変更不要。<br>
+尚、一部のサーバーではhtml等を置くディレクトリとcgiを実行できるディレクトリを分けています(nifty等)。その場合には、sugoiyo260.cssをhtml等を置くディレクトリ内に設置してください。</dd>
+<br>
+
+<dt>$ENDSUBTITLE='【THE終了スレッド】<br>※最大投稿数をオーバーしたり、その他諸事情にて終了となったスレッドです。';</dt>
+<dd>終了済みスレッドのサブタイトル</dd>
+<br>
+
+<dt>	@ADMINCRYPT=('okame#*ADMIN*','inoue#*subADMIN*');<br>
+@USERCRYPT=('phage#*研究中です*','mogura#*捻れ！*');</dt>
+<dd>管理者用と、ユーザー用のcrypt-keyと表示文字です。<br>
+crypt-keyは騙り（他ユーザーのなりすまし）を防止する為に入力するものです。通常は入力した文字を暗号化した文字列が表示されますが、管理者と常連ユーザーなどに特別な文字を設定できます。<br>
+「,'crypt-key#表示名'」という書き方で複数設定できます。
+<font color=red>※「okame」や「inoue」を適当な文字に置き換えてください。半角英数字16文字未満。</font><br>
+※表示名にhtml要素を含ませることが出来ます。リンクにしたり、画像を呼び出したりすることも可能です。</dd>
+<br>
+<dt>$NANASI='|;´Д`|';</dt>
+<dd>記事を投稿した際に、名前欄を未記入にすると、この文字列が表示されます。（この顔文字は篠田氏作成）</dd>
+<br>
+<dt>$PCLINK='&lt;a href="http://xxx.xxx/" target="_top"&gt;HOME&lt;/a&gt;';<br>
+$PCLINK2=' &amp;gt; ';</dt>
+<dd>PC版の画面右上に表示されるリンクです。ご自分のサイトのTOPページ等に書き換えてください。</dd>
+<br>
+<dt>$MOBLINK='&lt;a href="http://xxx.xxx/"&gt;HOME&lt;/a&gt;';<br>
+$MOBLINK2=' &amp;gt; ';</dt>
+<dd>携帯版のリンクです。ご自分のサイトのTOPページ等に書き換えてください。</dd>
+</dl>
+
+<b>[themobile.cgi]の設定変更</b><br>
+<dl>
+<dt>#!/bin/perl</dt>
+<dd>1行目にある「perlへのパス」と呼ばれるものです。#!/usr/local/bin/perl や、#!/usr/bin/perl など、<font color=red>※設置するサーバーによって異なります。</font>設置するサーバーの仕様を確認してください。</dd>
+</dl>
+
+<b>[admin.cgi]の設定変更</b><br>
+<dl>
+<dt>#!/bin/perl</dt>
+<dd>1行目にある「perlへのパス」と呼ばれるものです。#!/usr/local/bin/perl や、#!/usr/bin/perl など、<font color=red>※設置するサーバーによって異なります。</font>設置するサーバーの仕様を確認してください。</dd>
+</dl>
+
+※以下はadmin.cgiの25行目以降から記述されています。<br>
+<dl>
+<dt>$DATDIR='dat/';</dt>
+<dd>thebbs.cgiの場所から見た、datディレクトリの位置。通常は変更不要</dd>
+<br>
+<dt>$CSSFILE='../css/sugoiyo260.css';</dt>
+<dd>thebbs.cgiの場所から見た、sugoiyo260.cssの位置。<br>
+※よくわからないという方はhttp://から始まるアドレスを書いてください。通常は変更不要。<br>
+尚、一部のサーバーではhtml等を置くディレクトリとcgiを実行できるディレクトリを分けています(nifty等)。その場合には、sugoiyo260.cssをhtml等を置くディレクトリ内に設置してください。</dd>
+<br>
+<dt>$ADMINPWD='okame';</dt>
+<dd>管理者画面へ入室するためのパスワードです。必ず変更してください。半角英数字が基本です。</dd>
+</dl>
+<br>
+
+<center>
+<a name="settei2"></a>
+<hr><br>【オプション設定】<br>
+</center>
+<br>
+THEBBS.CGI（2X）では様々なオプション機能を用意しています。掲示板運営に慣れたらお試しください。<br>
+また詳細は<a href="http://thebbscgi.sugoiyo.com/sample/262.html" target="_blank">サンプルページ</a>で、それぞれのオプション設定をご覧いただけます。<br>
+
+<br>
+<b>[thebbs.cgi]のオプション設定</b><br>
+<br>※以下はthebbs.cgiの169行目以降から記述されています。<br>
+<dl>
+<dt>$MAXTHREADS=1024;<br>
+$DEFAULTTHREADS=100;<br>
+$MAXLINES=1024;<br></dt>
+<dd>上から順に、最大スレッド数、インデックス表示画面での初期スレッド表示数、最大投稿数となっています。</dd>
+<br>
+<dt>$MAXKAIGYOU=50;<br>
+$MAXBUNLENGTH=1750;</dt>
+<dd>投稿記事の最大改行数と、最大投稿文字数（全角換算）です。 </dd>
+<br>
+<dt>$ADDLIMITHOUR=0;</dt>
+<dd>スレッド作成の時間制限機能です。0の部分を時間単位で設定します。<br>スレッドの乱立等を防止するためのものです。</dd>
+<br>
+<dt>$MEMBERSHIPSYSTEM=0;<br>
+$MEMBERPWD='sugoiyo';</dt>
+<dd>掲示板を会員制にしたい場合に、0を1に変更します。またその際には、パスワードをsugoiyoから別の文字列に変更してください。半角英数字が基本です。</dd>
+<br>
+<dt>$KIRIBANSYSTEM=0;<br>
+@KIRIBAN=('2#2get! yeah!','3#NAGASHIMA JAPAN');</dt>
+<dd>投稿記事の番号を指定して、通常IPを暗号化した文字列を表示させる部分に、指定の文字列を表示させる機能です。</dd>
+<br>
+<dt>$WANTNAME=0;<br>$WANTCRKEY=0;</dt>
+<dd>名前入力を必須にしたり、crypt-keyの入力を必須にしたい場合に、0を1に変えます。名無し投稿などをして欲しくない場合などに利用します。</dd>
+<br>
+<dt>$HTMLPRINT=0</dt>
+<dd>html要素の記述を可能にする機能です。0を1に変更すると色々なhtmlタグが利用できるようになります。<br>
+詳細は<a href="http://thebbscgi.sugoiyo.com/sample/262.html" target="_blank">サンプルページ</a>をご覧ください。</dd>
+</dl>
+<br>
+<b>[thebbs.cgi]のオプション設定</b><br>
+<dl>
+<dt>$USERMODE=0;</dt>
+<dd>投稿者削除機能の設定をします。<br>
+投稿者が削除できるようにするには　1<br>
+投稿者が削除できないようにするには　0<br>
+を指定してください</dt>
+</dl>
+<br><br>
+<center>
+<a name="rei"></a>
+<hr><br>【 設置例 】<br>
+</center>
+<br>
+Windowsなら<a href="http://www2.biglobe.ne.jp/~sota/" target="_blank">ffftp</a>、Macなら<a href="http://fetch.jp/" target="_blank">fetch</a>あたりが一般的なFTPソフトだと思います。<br>
+<br>
+<b>設置例１：</b><br>
+<br>
+<font color=white>-</font>public_html<br>
+<font color=white>---</font>┣━ css (任意のディレクトリ)<br>
+<font color=white>---</font>┃　 　┗ sugoiyo260.css<br>
+<font color=white>---</font>┗━ cgi-bin (cgiを実行できる任意のディレクトリ)<br>
+<font color=white>----------</font>┣━ thebbs.cgi<br>
+<font color=white>----------</font>┣━ themobile.cgi<br>
+<font color=white>----------</font>┣━ admin.cgi<br>
+<font color=white>----------</font>┗━━ dat  (ログ保存用ディレクトリ)<br>
+<br>
+<br>
+<b>設置例２：</b> nifty等での設置の場合<br>
+<br>
+<font color=white>-</font>/<br>
+<font color=white>-</font>┣public_html<br>
+<font color=white>-</font>┃ ┗ css (任意のディレクトリ)<br>
+<font color=white>-</font>┃　  　┗ sugoiyo260.css<br>
+<font color=white>-</font>┃<br>
+<font color=white>-</font>┗ cgi-bin (cgiを実行できる固定のディレクトリ)<br>
+<font color=white>----</font>┣━ thebbs.cgi<br>
+<font color=white>----</font>┣━ themobile.cgi<br>
+<font color=white>----</font>┣━ admin.cgi<br>
+<font color=white>----</font>┗━━ dat  (ログ保存用ディレクトリ)<br>
+<br>
+※public_htmlは公開されているディレクトリの最上層を意味しています。サーバーによってはwwwだったり、niftyではhomepageとなっていたりします。<br>
+<br><br>
+<center>
+<a name="perm"></a>
+<hr><br>【 パーミッション 】<br>
+</center>
+<b>パーミッション:</b><br>
+<br>
+<table border=0 class=pt1 cellpadding=3 cellspacing=0>
+<tr><td>thebbs.cgi</td><td>705 or 755</td></tr>
+<tr><td>themobile.cgi</td><td>705 or 755</td></tr>
+<tr><td>admin.cgi</td><td>705 or 755</td></tr>
+<tr><td>dat</td><td>707 or 757</td></tr>
+<tr><td>sugoiyo260.css</td><td>604 or 644</td></tr>
+</table>
+<br>が標準的。たぶん。<br>
+<font color=red>※設置するサーバーの仕様を確認してください</font><br>
+<br><hr>
+<br>
+<center>
+<font color=blue>&copy; 2005 sugoiyo, All Rights Reserved</font>
+<br>
+</td></tr></table>
+<font color=white>フ氏=研究者</br>

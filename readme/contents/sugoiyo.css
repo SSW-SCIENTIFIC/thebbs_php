@@ -1,0 +1,18 @@
+BODY {
+	BACKGROUND-COLOR:white;
+	COLOR:#333333;
+	font-family: 'verdana,chicago,"‚l‚r ‚oƒSƒVƒbƒN",Osaka';
+}
+dt{background-color:#eeeeee;color:#333333;width:100%;padding:3px;margin:15px,0,5px,15px;font-size:92%;border:1px #333333 solid;}
+dd{word-wrap:break-word;font-size:90%;line-height:120%;}
+
+.pt1{
+	FONT-SIZE: 12px;
+	line-height:140%;
+}
+.pt2{
+	FONT-SIZE: 13px;
+	BACKGROUND-COLOR:#999999;
+	COLOR:#cccccc;
+	text-align:center;
+}

@@ -1,0 +1,127 @@
+<html>
+<head>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=SHIFT_JIS">
+<title>THEBBS風スクリプトCSS解説</title>
+<link rel="stylesheet" type="text/css" href="sugoiyo.css">
+</head>
+<body>
+<table border=0 width=450 class=pt1><tr><td>
+<br><br>
+<big><b>CSS 簡易解説書</b></big>
+<br>
+<center>
+<a name="hajime"></a>
+<hr><br>【 sugoiyo260.css 】<br>
+</center>
+<br>
+<br>
+sugoiyo260.cssではそれぞれ、以下の項目に対して指定をしています。実際のファイルでの記述順とは並ぶ順序が異なっています。
+<br>
+<br>
+<b>全体的なもの</b><br>
+<dl>
+<dt>・全体の背景色</dt>
+<dd><u>body{background-color:white}</u></dd>
+<br>
+<dt>・全体のリンク色等</dt>
+<dd><u>a{COLOR:blue;font-size:96%;padding:2px;}<br>
+:hover {color:blue;text-decoration:underline;}</u></dd>
+<br>
+<dt>・タイトル帯部分の背景色・文字色・帯の幅・フォントサイズ・余白</dt>
+<dd><u>.ti{background-color:dimgray;color:white;width:100%;font-size:large;padding:3px}</u></dd>
+<br>
+<dt>・削除済み記事のタイトル帯部分の背景色・文字色・その他</dt>
+<dd><u>.ti2{background-color:dimgray;color:white;width:100%;font-size:14px;padding:3px}</u></dd>
+<br>
+<dt>・スクリプト名称表示のフォント・サイズ・文字色</dt>
+<dd><u>.cp{position:absolute;right:2px;font-size:10px}<br>
+.cp a{COLOR:333333;font-family: 'verdana,chicago,"ＭＳ Ｐゴシック",Osaka';text-decoration:none;}</u></dd>
+<br>
+</dl>
+<br>
+<b>インデックス画面（スレッド一覧）</b><br>
+<br>
+<dl>
+
+<dt>・サブタイトル部分の枠線・余白・フォントサイズ</dt>
+<dd><u>.box{border:1px solid;margin:10px,30px;padding:5px;font-size:75%}</u></dd>
+<br>
+<dt>・インデックス（スレッドの一覧画面）でのHNの余白</dt>
+<dd><u>.index b{padding:0,3}</u></dd>
+<br>
+<dt>・インデックスでのスレッドタイトルのフォントサイズ</dt>
+<dd><u>.index dd{font-size:80%}</u></dd>
+<br>
+<dt>・インデックスでのスレッド情報（レス数,HN,日付）のフォントサイズや余白</dt>
+<dd><u>.index dt{margin-top:5;text-indent:1em;font-size:96%}</u></dd>
+<br>
+</dl>
+<br>
+<b>スレッド表示画面</b><br>
+<br>
+<dl>
+
+<dt>・admin暗号化文字列の色とフォントサイズ</dt>
+<dd><u>i{color:red;font-size:smaller;}</u><br></dd>
+<br>
+<dt>・一般暗号化文字列の色とフォントサイズ</dt>
+<dd><u>.thread em{color:gray;font-size:smaller;}</u></dd>
+<br>
+<dt>・削除記事の色とフォントサイズ</dt>
+<dd><u>.thread small{color:gray}</u></dd>
+<br>
+<dt>・IPから生成する文字列の色や、スレッド番号やレス番号、スレッドタイトルのリンク色等</dt>
+<dd><u>#IP{color:#eeeeee;text-decoration:none;font-size:smaller}<br>
+#IP:hover {color:#aaaaaa;text-decoration:none;}<br>
+#num{color:#000000;text-decoration:none;}<br>
+#num:hover {color:red;text-decoration:underline;}<br>
+#ti{color:white;text-decoration:none;}<br>
+#ti:hover {color:white;text-decoration:underline;}</u></dd>
+<br>
+<dt>・スレッド画面でのHNのフォントサイズ、下線</dt>
+<dd><u>.thread b{text-decoration:underline;font-size:110%}</u></dd>
+<br>
+<dt>・スレッド画面での投稿情報（レス数,HN,日付）のフォントサイズや余白<・dt>
+<dd><u>.thread dt{margin:15px,0,5px,0;font-size:92%}</u></dd>
+<br>
+<dt>・スレッド画面での投稿記事のフォントサイズや改行</dt>
+<dd><u>.thread dd{word-wrap:break-word;font-size:90%;line-height:120%;}</u></dd>
+<br>
+<dt>※機能していません・・。</dt>
+<dd><u>.thread input{border:1px solid}</u></dd>
+<br>
+<dt>※機能していません・・。</dt>
+<dd><u>.thread textarea{border:1px solid;filter:}</u></dd>
+<br>
+<dt>・スレッド画面右上のインデックスへ戻るリンク部分のフォントサイズ、右詰</dt>
+<dd><u>.mi{font-size:smaller;text-align:right}</u></dd>
+<br>
+<dt>・終了スレッドのメッセージ文字色</dt>
+<dd><u>.end{color:red}</u><br></dd>
+<br>
+<dt>・終了スレッドのメッセージ文字色</dt>
+<dd><u>.sma{font-size:80%;padding:10px}</u></dd>
+<br>
+</dl>
+<br>
+<b>その他</b><br>
+<br>
+<dl>
+
+<dt>250より追加されたユーザー用文字列の文字色を設定</dt>
+<dd><u>#uc{color:blue}</u></dd>
+
+<dt>260より追加されたPaiNタグ内の表示を設定</dt>
+<dd><u>.PaiN {background-color:#efefef;padding-top:15px;padding-bottom:15px;padding-left:7px;padding-right:7px;border:1px dimgray dotted}<br>
+
+.PaiN a{color:black;text-decoration:none;}<br>
+.PaiN:hover {color:black;text-decoration:none;}
+</u></dd>
+</dl>
+<br><hr>
+<br>
+<center>
+<font color=blue>&copy; 2005 sugoiyo, All Rights Reserved</font>
+<br>
+</td></tr></table>
+<font color=white>天然ポマード=秋葉系</br>
